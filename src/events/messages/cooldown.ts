@@ -55,13 +55,10 @@ export default class cooldown {
         await db.collection('stats').updateOne({ _id: date }, { $inc: { msg: 1 } }, { upsert: true })
         if(msg.channel.id == '608630294261530624')return;
 
-        let user = await db.collection('user').findOne({ '_id': { $eq: msg.author.id } });
-
-        if(!user)
-            await db.collection('user').insertOne({ _id: msg.author.id, exp: 1, birthday: null, fc: null, hidden: false, pat: 0, hug: 0, boop: 0, slap: 0, highfive: 0 });
-        else if(!cooldownXP[msg.author.id]) {
-            await db.collection('user').updateOne({ _id: msg.author.id }, { $inc: { exp: 1 }});
-            leveling.levelCheck(msg, (user.exp+1));
+        if(!cooldownXP[msg.author.id]) {
+            await db.collection('user').updateOne({ _id: msg.author.id }, { $inc: { exp: 1 }}, { upsert: true });
+            let user = await db.collection('user').findOne({ '_id': { $eq: msg.author.id } });
+            leveling.levelCheck(msg, (user.exp));
             cooldownXP[msg.author.id] = 1;
             return setTimeout(async () => { delete cooldownXP[msg.author.id] }, 5000)
         }

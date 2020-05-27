@@ -33,34 +33,37 @@ async function profileImg(bot:Client, msg:Message, db:Db, id:string) {
     let guild = bot.guilds.cache.find(val => val.id == process.env.GUILDID)
     let member = guild.members.cache.find(val => val.id == id)
 
-    let leadXP = await db.collection('user').find({ hidden: false }).sort({exp:-1}).toArray();
-    let leadHug = await db.collection('user').find({ hidden: false }).sort({hug:-1}).toArray();
-    let leadPat = await db.collection('user').find({ hidden: false }).sort({pat:-1}).toArray();
-    let leadBoop = await db.collection('user').find({ hidden: false }).sort({boop:-1}).toArray();
-    let leadSlap = await db.collection('user').find({ hidden: false }).sort({slap:-1}).toArray();
-    let leadHighfive = await db.collection('user').find({ hidden: false }).sort({highfive:-1}).toArray();
+    let leadXP = await db.collection('user').find({ hidden: { $ne: true } }).sort({exp:-1}).toArray();
+    let leadHug = await db.collection('user').find({ hidden: { $ne: true }}).sort({hug:-1}).toArray();
+    let leadPat = await db.collection('user').find({ hidden: { $ne: true } }).sort({pat:-1}).toArray();
+    let leadBoop = await db.collection('user').find({ hidden: { $ne: true } }).sort({boop:-1}).toArray();
+    let leadSlap = await db.collection('user').find({ hidden: { $ne: true } }).sort({slap:-1}).toArray();
+    let leadHighfive = await db.collection('user').find({ hidden: { $ne: true } }).sort({highfive:-1}).toArray();
+
+    let lvlInfo = utilities.levelInfo(userDB.exp);
 
     let user = {
         avatar: userDiscord.avatarURL({ format: 'png', dynamic: false, size: 512 }),
         username: userDiscord.username,
         icon: "",
         exp: userDB.exp,
-        pat: userDB.pat,
-        hug: userDB.hug,
-        boop: userDB.boop,
-        slap: userDB.slap,
-        highfive: userDB.highfive,
+        pat: userDB.pat? userDB.pat : 0,
+        hug: userDB.hug? userDB.hug : 0,
+        boop: userDB.boop? userDB.boop : 0,
+        slap: userDB.slap? userDB.slap : 0,
+        highfive: userDB.highfive? userDB.highfive : 0,
         positionXP: leadXP.findIndex(val => val._id == id),
         positionPat: leadPat.findIndex(val => val._id == id),
         positionHug: leadHug.findIndex(val => val._id == id),
         positionBoop: leadBoop.findIndex(val => val._id == id),
         positionSlap: leadSlap.findIndex(val => val._id == id),
         positionHighfive: leadHighfive.findIndex(val => val._id == id),
-        birthday: "",
-        fc: "",
-        level: 0,
-        current: 0,
-        max: 0
+        birthday: userDB.birthday? userDB.birthday : "--/--",
+        fc: userDB.fc? userDB.fc : "not registered yet",
+        psn: userDB.psn? userDB.psn : "not registered yet",
+        level: lvlInfo.level,
+        current: lvlInfo.current,
+        max: lvlInfo.max
     }
 
     if(id == process.env.QUMU)
@@ -69,21 +72,6 @@ async function profileImg(bot:Client, msg:Message, db:Db, id:string) {
         user.icon = '<i class="fas fa-chess-rook"></i>'
     else if (id == bot.user.id)
         user.icon = '<i class="fas fa-chess-knight"></i>'
-
-    if(userDB.birthday == null)
-        user.birthday = 'not registered yet';
-    else
-        user.birthday = userDB.birthday
-
-    if(userDB.fc == null)
-        user.fc = 'not registered yet';
-    else
-        user.fc = userDB.fc
-
-    let lvlInfo = await utilities.levelInfo(user.exp);
-    user.level = lvlInfo.level
-    user.current = lvlInfo.current
-    user.max = lvlInfo.max
 
     let colors:string[][] = [
         ['#8BC6EC', '#9599E2'],
@@ -95,7 +83,6 @@ async function profileImg(bot:Client, msg:Message, db:Db, id:string) {
     ]
 
     let whichColor;
-
     if(id == process.env.QUMU || id == bot.user.id || member.roles.cache.find(val => val.id == process.env.MODROLE))
         whichColor = 5
     else {
@@ -115,12 +102,12 @@ async function profileImg(bot:Client, msg:Message, db:Db, id:string) {
         file = await imGenerator(508, 358, html, userDiscord.id, 'prof')
     } else {
         html = await ejs.renderFile('views/profile.ejs', { user, colors, whichColor });
-        file = await imGenerator(508, 428, html, userDiscord.id, 'prof')
+        file = await imGenerator(508, 408, html, userDiscord.id, 'prof')
     }
 
     try {
         console.log(`info: profile by ${msg.author.tag}`)
-        return await msg.channel.send('', {files: [file]})
+        return msg.channel.send('', {files: [file]})
             .then(() => { msg.channel.stopTyping(true) });
     } catch(err) {
         console.error(err)

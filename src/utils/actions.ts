@@ -9,7 +9,7 @@ import { Db } from 'mongodb';
 import utilities from './utilities'
 
 /** @desc Automatic replies of the bot when an action is done on it  */
-let reply = ["awww", "thank you :33", "damn you're so precious", "why are you so cute with me ?", "omg", "<3", "so cuuuute c:", "c:", "c;", ":3", "QT af :O", "^u^ thanks!", ">u<", "-u-"] // That "oh yeaaaah ;3" is a little... suggestive. I've changed it. ;) - Hy~
+let reply = ["awww", "thank you :33", "damn you're so precious", "why are you so cute with me ?", "omg", "<3", "so cuuuute c:", "c:", "c;", ":3", "QT af :O", "^u^ thanks!", ">u<", "-u-"]
 
 interface stringKeyArray {
 	[index:string]: any;
@@ -22,6 +22,7 @@ interface stringKeyArray {
 let lastGif:stringKeyArray = {
     'pat': 0,
     'hug': 0,
+    'group-hug': 0,
     'boop': 0,
     'slap': 0
 };
@@ -30,6 +31,7 @@ let lastGif:stringKeyArray = {
 let count:stringKeyArray = {
     'pat': 46,
     'hug': 47,
+    'group-hug': 9,
     'boop': 15,
     'slap': 9
 };
@@ -42,43 +44,61 @@ let count:stringKeyArray = {
  * @param type - Type of actions (hug, pat...)
  */
 export default async function actionsRun (bot:Client, msg:Message, args:string[], db:Db, type:string) {
-    let n = utilities.randomInt(count[type])
-    while(lastGif[type] == n) {
-        n = utilities.randomInt(count[type]);
-    }
-    lastGif[type] = n;
-    let r = utilities.randomInt(reply.length)
-
-    if(args.length <= 2) {
-
+    if(args.length <= 10) {
         if(msg.mentions.everyone)return;
-        let mentionFirst = msg.mentions.users.first()
-        let mentionSecond = msg.mentions.users.last()
+        if(msg.mentions.members.has(msg.author.id))
+            return msg.channel.send({"embed": { "title": `:x: > **You can't ${type} yourself!**`, "color": 13632027 }});
 
-        if(!mentionFirst || !mentionSecond)return;
-        if(mentionFirst.id == msg.author.id || mentionSecond.id == msg.author.id)
-            return msg.channel.send({"embed": { "title": `:x: > **You can't ${type} youself!**`, "color": 13632027 }});
-
-        if((mentionFirst.id == '606458989575667732' || mentionSecond.id == '606458989575667732') && type != 'slap') {
+        if(msg.mentions.members.has(bot.user.id) && type != 'slap') {
+            let r = utilities.randomInt(reply.length)
             setTimeout(() => {
                 r-1;
-                msg.channel.send(reply[r])
+                msg.reply(reply[r]);
             }, 2000)
         }
 
         const embed = new MessageEmbed();
         embed.setColor('#F2DEB0')
-        if(msg.mentions.members.size == 2)
-            embed.setTitle(`**${msg.author.username}** ${type}s you **${mentionFirst.username}** & **${mentionSecond.username}** !`)
-        else
-            embed.setTitle(`**${msg.author.username}** ${type}s you **${mentionFirst.username}**!`)
-        embed.setImage(`https://${process.env.CDN_URL}/img/${type}/${n}.gif`)
+        if(msg.mentions.members.size >= 2) {
+            let users = msg.mentions.members.array()
+            let title: string = `**<@${msg.author.id}>** ${type}s you **<@${users[0].id}>**`;
+            for(let i = 1; i < (msg.mentions.members.size-1); i++)
+                title = `${title}, **<@${users[i].id}>**`
+            title = `${title} & **<@${(msg.mentions.users.last()).id}>**!`
+            embed.setDescription(title);
+
+            if(type == 'hug') {
+                let groupType = `group-${type}`
+                let n = utilities.randomInt(count[groupType])
+                while(lastGif[groupType] == n)
+                    n = utilities.randomInt(count[groupType]);
+                lastGif[groupType] = n;
+
+                embed.setImage(`https://${process.env.CDN_URL}/img/${type}/group/${n}.gif`)
+            } else {
+                let n = utilities.randomInt(count[type])
+                while(lastGif[type] == n)
+                    n = utilities.randomInt(count[type]);
+                lastGif[type] = n;
+
+                embed.setImage(`https://${process.env.CDN_URL}/img/${type}/${n}.gif`)
+            }
+        } else {
+            embed.setDescription(`**<@${msg.author.id}>** ${type}s you **<@${(msg.mentions.members.first()).id}>**!`)
+
+            let n = utilities.randomInt(count[type])
+            while(lastGif[type] == n)
+                n = utilities.randomInt(count[type]);
+            lastGif[type] = n;
+
+            embed.setImage(`https://${process.env.CDN_URL}/img/${type}/${n}.gif`)
+        }
 
         let user = await db.collection('user').findOne({ '_id': { $eq: msg.author.id } });
-        await db.collection('user').updateOne({ '_id': { $eq: msg.author.id } }, { $inc: { [type]: msg.mentions.members.size }});
-        await db.collection('user').updateOne({ '_id': { $eq: bot.user.id } }, { $inc: { [type]: msg.mentions.members.size }});
+        await db.collection('user').updateOne({ '_id': { $eq: msg.author.id } }, { $inc: { [type]: msg.mentions.members.size }}, { upsert: true });
+        await db.collection('user').updateOne({ '_id': { $eq: bot.user.id } }, { $inc: { [type]: msg.mentions.members.size }}, { upsert: true });
 
-        embed.setFooter(`You have given ${user[type] + msg.mentions.members.size} ${type}s`)
+        embed.setFooter(`You have given ${(user[type]? user[type] : 0) + msg.mentions.members.size} ${type}s`)
         return msg.channel.send(embed)
         .then(() => {
             console.log(`info: ${type} sent by ${msg.author.tag}`);
@@ -88,8 +108,7 @@ export default async function actionsRun (bot:Client, msg:Message, args:string[]
     } else if(args.length > 2) {
         if(type == "hug") {
             msg.reply(`You can't ${type} them all, you can't fit more than two people in a hug! :(`)
-        }
-        else {
+        } else {
             msg.reply(`You can't ${type} them all, you only have 2 arms! :(`)
         }
     }

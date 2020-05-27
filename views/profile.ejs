@@ -6,27 +6,33 @@
     <script src="https://kit.fontawesome.com/0de1f1c460.js" crossorigin="anonymous"></script>
     <style type="text/css">
     body { margin: 0; }
-    .box { border: 4px solid #FFFFFF; border-radius: 3px; color: white; width: 500px; height: 420px; font-family: 'Nunito'; background-color: #8BC6EC; background-image: linear-gradient(135deg, <%=colors[whichColor][0]%> 0%, <%=colors[whichColor][1]%> 100%); }
-    #pfp { position: absolute; height: 140px; width: 140px; border-radius: 5%; }
-    .box > section { position: absolute; top: 14px; left: 14px; width: 480px; height: 400px; background-color: rgba(0, 0, 0, 0.15); }
+    .box { border: 4px solid #FFFFFF; border-radius: 3px; color: white; width: 500px; height: 400px; font-family: 'Nunito'; background-color: #8BC6EC; background-image: linear-gradient(135deg, <%=colors[whichColor][0]%> 0%, <%=colors[whichColor][1]%> 100%); }
+    #pfp { position: absolute; height: 140px; width: 140px; border-radius: 50%; }
+    .box > section { position: absolute; top: 14px; left: 14px; width: 480px; height: 380px; background-color: rgba(0, 0, 0, 0.15); }
     header > div { position: absolute; top: 10px; left: 150px; display: table; width: 320px; height: 80px; }
     header > div > h4 { margin: 0; font-size: 28pt; font-weight: 500; display: table-cell; line-height: 1.1; text-align: left; vertical-align: middle; }
     header > div > h4 > i { padding: 0 0.4em 0 0; font-size: 18pt; vertical-align: middle; display: inline-block; height: 1.3em; color: rgba(255, 255, 255, 0.8); }
     header > section > h5 { position: absolute; margin: 0; top: 94px; left: 155px; font-size: 17pt; font-weight: 300; display: block; text-align: left; letter-spacing: 2px; }
     header > section > h6 { position: absolute; margin: 0; top: 102px; right: 12px; font-size: 12pt; font-weight: 300; display: block; text-align: right; letter-spacing: 2px; color: rgba(255, 255, 255, 0.75); width: 200px; }
     header > section > #xp { height: 8px; margin: 0; position: absolute; top: 120px; left: 150px; text-align: left; border: 1px solid rgba(255,255,255,0.4); border-radius: 0.2em; width: 320px; }
-    header > section > #xp::-webkit-progress-value { background: rgba(255, 255, 255, 0.85); border-radius: 0.2em; }
+    header > section > #xp::-webkit-progress-value { background: rgba(255, 255, 255, 0.85); border-radius: 0.14em; }
     header > section > #xp::-webkit-progress-bar { background: rgba(156, 160, 162, 0.5); border-radius: 0.2em; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset; }
     main > table { position: absolute; top: 170px; left: 10px; width: 460px; text-align: center; font-size: 16pt; }
     th { font-weight: 500; margin: 0 0 10px 0; } td { font-weight: 300; }
     main > table > tbody > #ranks { font-size: 11pt; color: rgba(255, 255, 255, 0.65); }
-    main > #birthday > h5 { position: absolute; margin: 0; top: 280px; left: 50px; font-size: 17pt; font-weight: 300; display: block; text-align: left; letter-spacing: 2px; }
-    main > #birthday > h6 { position: absolute; margin: 0; top: 280px; left: 240px; font-size: 17pt; font-weight: 300; display: block; text-align: left; letter-spacing: 1px; color: rgba(255, 255, 255, 0.8); }
-    main > #birthday > p { position: absolute; margin: 0; top: 288px; right: 100px; font-size: 10pt; font-weight: 300; display: block; text-align: left; letter-spacing: 1px; color:rgba(255, 255, 255, 0.5); }
-    main > #switch-fc > h5 { position: absolute; margin: 0; top: 340px; left: 50px; font-size: 17pt; font-weight: 300; display: block; text-align: left; letter-spacing: 2px; }
-    main > #switch-fc > h6 { position: absolute; margin: 0; top: 340px; left: 200px; font-size: 17pt; font-weight: 300; display: block; text-align: left; letter-spacing: 1px; color: rgba(255, 255, 255, 0.8); }
+    main > #birthday > h5 { position: absolute; margin: 0; top: 276px; left: 168px; font-size: 17pt; font-weight: 300; display: block; text-align: left; letter-spacing: 2px; }
+    main > #birthday > h5 > i { color:rgba(255, 255, 255, 0.8); }
+    main > #birthday > h6 { position: absolute; margin: 0; top: 277px; left: 200px; font-size: 17pt; font-weight: 300; display: block; text-align: left; letter-spacing: 1px; color: rgba(255, 255, 255, 0.8); }
+    main > #birthday > p { position: absolute; margin: 0; top: 285px; right: 140px; font-size: 10pt; font-weight: 300; display: block; text-align: left; letter-spacing: 1px; color:rgba(255, 255, 255, 0.5); }
+    main > #switch-fc > h5 { position: absolute; margin: 0; top: 325px; left: 20px; font-size: 17pt; font-weight: 300; display: block; text-align: left; letter-spacing: 2px; }
+    main > #switch-fc > h5 > img { width: 17pt; height: 17pt; }
+    main > #switch-fc > h6 { position: absolute; margin: 0; top: 325px; left: 50px; font-size: 13pt; font-weight: 300; display: block; text-align: left; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.8); }
+    main > #psn-id > h5 { position: absolute; margin: 0; top: 323px; left: 254px; font-size: 17pt; font-weight: 300; display: block; text-align: left; letter-spacing: 2px; }
+    main > #psn-id > h5 > i { color:rgba(255, 255, 255, 0.8); }
+    main > #psn-id > h6 { position: absolute; margin: 0; top: 325px; left: 288px; font-size: 13pt; font-weight: 300; display: block; text-align: left; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.8); }
     main > #badges > h5 { position: absolute; margin: 0; top: 344px; left: 22px; font-size: 16pt; font-weight: 300; display: block; text-align: left; letter-spacing: 1px; text-decoration: underline; }
-    footer > p { position: absolute; top: 385px; width: 480px; margin: 0; text-align: center; letter-spacing: 1px; color: rgba(255, 255, 255, 0.15); font-size: 10pt; }
+    footer > p { position: absolute; top: 365px; width: 480px; margin: 0; text-align: center; letter-spacing: 1px; color: rgba(255, 255, 255, 0.15); font-size: 10pt; }
+    .separator { border-bottom: 1px solid #D6D6D680; margin: 10em 0 0 0; margin-left: auto; margin-right: auto; width: 60%; }
     </style>
 </head>
 <body>
@@ -43,6 +49,7 @@
                     <progress id="xp" value="<%= user.current %>" max="<%= user.max %>"></progress>
                 </section>
             </header>
+            <div class="separator"></div>
             <main>
                 <table>
                     <tr>
@@ -50,7 +57,7 @@
                         <th>Pats</th>
                         <th>Boops</th>
                         <th>Slaps</th>
-                        <th>Highfive</th>
+                        <th>Highfives</th>
                     </tr>
                     <tr>
                         <td><%= user.hug %></td>
@@ -68,15 +75,17 @@
                     </tr>
                 </table>
                 <section id="birthday">
-                    <h5>Your birthday :</h5>
+                    <h5><i class="fas fa-birthday-cake"></i></h5>
                     <h6><%= user.birthday %></h6>
-                    <% if(user.birthday != "not registered yet") { %>
-                        <p>(mm/dd)</p>
-                    <% } %>
+                    <p>(mm/dd)</p>
                 </section>
                 <section id="switch-fc">
-                    <h5>Switch FC :</h5>
+                    <h5><img src="https://cdn.iwa.sh/img/switch.png"/></h5>
                     <h6><%= user.fc %></h6>
+                </section>
+                <section id="psn-id">
+                    <h5><i class="fab fa-playstation"></i></h5>
+                    <h6><%= user.psn %></h6>
                 </section>
             </main>
             <footer>

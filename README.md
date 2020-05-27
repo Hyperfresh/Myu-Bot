@@ -1,50 +1,53 @@
 <div align="center">
 <p align="center">
-    <img src="https://cdn.iwa.sh/img/q-bot_logo.png" alt="logo"/>
+  <img src="https://cdn.iwa.sh/img/tiles/q-bot.png" alt="logo"/>
+  <h1>Q-Bot</h1>
 
   <p align="center">
     Custom Discord bot for <a href="https://discord.gg/BU6cPff">Qumu's Discord server</a>.
   </p>
+
+  <img alt="Q-Bot Status" src="https://img.shields.io/website?down_color=red&down_message=offline&label=Q-Bot&up_color=brightgreen&up_message=online&url=https%3A%2F%2Fapi.iwa.sh%2Fapp%2Fqbot">
+  <a href="https://nodejs.org/en/">
+    <img alt="Node minimal version" src="https://img.shields.io/badge/node-%3E%3Dv12-blue"/>
+  </a>
+
+  <br/>
+
+  <img alt="Better Code Score" src="https://bettercodehub.com/edge/badge/iwa/Q-Bot?branch=master"/>
+  <a href="https://www.codefactor.io/repository/github/iwa/q-bot/overview/master">
+    <img alt="codefactor Score" src="https://www.codefactor.io/repository/github/iwa/q-bot/badge/master"/>
+  </a>
 </p>
 </div>
 
-## About
-
-**Q-Bot is handled by @iwa**
+## 📄 About
 
 - Language used : `TypeScript, with NodeJS`
 - Library used : `discord.js`
 
-[![BCH compliance](https://bettercodehub.com/edge/badge/iwa/Q-Bot?branch=master)](https://bettercodehub.com/)
-[![CodeFactor](https://www.codefactor.io/repository/github/iwa/q-bot/badge/master)](https://www.codefactor.io/repository/github/iwa/q-bot/overview/master)
+## 🤝 Contributing
 
-## How to contribute
+- Create a fork and clone it
+- Make your modifications
+- Create a Pull Request, with `dev` as target branch
 
-#### 1. Make a fork and clone it
-#### 2. Make your modifications
-#### 3. Create a Pull Request, with `dev` as target branch
 
------
+Pull requests, feature requests and issues are welcome.<br/>
+**Please make sure to update / rebase your PR before submitting it.** c:
 
-### Advice : How to keep your fork up to date
 
-#### 1. Add remote from original repository in your forked repository:
+## ⭐️ Show your support
 
-    cd into/cloned/fork-repo
-    git remote add upstream https://github.com/iwa/Q-Bot.git
-    git fetch upstream
+Star this repository if you like the Q-Bot Project!
 
-#### 2. Updating your fork from original repo to keep up with their changes:
+<a href="https://www.patreon.com/iwaQwQ">
+  <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="140">
+</a>
 
-    git pull upstream master
+## 👤 Author
 
-Now you should have at least 2 remotes : `origin` & `upstream`
+👤 **[@iwa](https://github.com/iwa)**
 
-Keep upstream/master always unedited since it'll be your fresh copy from the original repo.
-
-**A good way to keep working on your fork for PRs is :**
-
-- Always check for an update of the upstream before begin your work
-- Create another branch from upstream/master so you can keep upstream/master clean
-- Make your own edits
-- Create a PR
+## 📝 License
+> Copyright © [Pierre 'iwa'](https://github.com/iwa).
