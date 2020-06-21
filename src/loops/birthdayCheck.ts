@@ -17,15 +17,15 @@ const url = process.env.MONGO_URL, dbName = process.env.MONGO_DBNAME;
  * the 'Happy Birthday' role is given to the people.
  * @param bot - Discord Client object
  */
-export default async function birthdayCheck (bot:Client) {
+export default async function birthdayCheck(bot: Client) {
     let today = new Date();
     let hh = today.getUTCHours()
 
-    if(hh == 7) {
+    if (hh == 7) {
         let guild = bot.guilds.cache.find(val => val.id == process.env.GUILDID)
         let oldMembers = guild.roles.fetch(process.env.BIRTHDAYROLE);
 
-        (await oldMembers).members.forEach(async (user:GuildMember) => {
+        (await oldMembers).members.forEach(async (user: GuildMember) => {
             try {
                 await user.roles.remove(process.env.BIRTHDAYROLE)
             } catch (e) {
@@ -37,13 +37,13 @@ export default async function birthdayCheck (bot:Client) {
         let mm = String(today.getMonth() + 1).padStart(2, '0');
         let todayString = `${mm}/${dd}`;
 
-        let mongod = await MongoClient.connect(url, {'useUnifiedTopology': true});
+        let mongod = await MongoClient.connect(url, { 'useUnifiedTopology': true });
         let db = mongod.db(dbName);
 
         let data = await db.collection('user').find({ 'birthday': { $eq: todayString } }).toArray();
 
-        if(data.length >= 1) {
-            let channel:any = guild.channels.cache.find(val => val.id == process.env.BIRTHDAYTC)
+        if (data.length >= 1) {
+            let channel: any = guild.channels.cache.find(val => val.id == process.env.BIRTHDAYTC)
 
             data.forEach(async user => {
                 let userInfo = await guild.members.fetch(user._id)

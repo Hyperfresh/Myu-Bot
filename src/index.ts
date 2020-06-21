@@ -20,7 +20,7 @@ import cooldown from './events/messages/cooldown';
 import ready from './events/ready';
 
 
-//Imports commands from the 'commands' folder
+// Imports commands from the 'commands' folder
 fs.readdir('./build/commands/', { withFileTypes: true }, (error, f) => {
     if (error) return console.error(error);
     f.forEach((f) => {
@@ -28,13 +28,13 @@ fs.readdir('./build/commands/', { withFileTypes: true }, (error, f) => {
             fs.readdir(`./build/commands/${f.name}/`, (error, fi) => {
                 if (error) return console.error(error);
                 fi.forEach((fi) => {
-                    if(!fi.endsWith(".js"))return;
+                    if (!fi.endsWith(".js")) return;
                     let commande = require(`./commands/${f.name}/${fi}`);
                     commands.set(commande.help.name, commande);
                 })
             })
         } else {
-            if(!f.name.endsWith(".js"))return;
+            if (!f.name.endsWith(".js")) return;
             let commande = require(`./commands/${f.name}`);
             commands.set(commande.help.name, commande);
         }
@@ -64,11 +64,6 @@ bot.on('message', async (msg: Discord.Message) => {
     if (!msg.guild.available) return;
 
     await cooldown.message(msg);
-
-    if (msg.channel.id == process.env.SUGGESTIONTC) {
-        await msg.react('✅');
-        return msg.react('❌');
-    }
 
     let mongod = await MongoClient.connect(url, { 'useUnifiedTopology': true });
     let db = mongod.db(dbName);
@@ -140,6 +135,22 @@ import birthdayCheck from './loops/birthdayCheck';
 setInterval(async () => {
     await birthdayCheck(bot)
 }, 3600000);
+
+
+// Logs channel
+import messageDelete from './events/logs/messageDelete';
+bot.on('messageDelete', async msg => {
+    return messageDelete(msg, bot);
+});
+import guildMemberRemove from './events/logs/guildMemberRemove';
+bot.on('guildMemberRemove', async member => {
+	guildMemberRemove(member, bot);
+});
+import guildBanAdd from './events/logs/guildBanAdd';
+bot.on('guildBanAdd', async (guild, user) => {
+	guildBanAdd(guild, user, bot);
+});
+
 
 // Login
 bot.login(process.env.TOKEN)

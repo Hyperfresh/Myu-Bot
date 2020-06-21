@@ -2,7 +2,7 @@ import { Client, Message } from 'discord.js'
 import { Db } from 'mongodb'
 const highfive = require('./highfive');
 
-module.exports.run = async (bot:Client, msg:Message, args:string[], db:Db) => {
+module.exports.run = async (bot: Client, msg: Message, args: string[], db: Db) => {
     highfive.run(bot, msg, args, db);
 };
 

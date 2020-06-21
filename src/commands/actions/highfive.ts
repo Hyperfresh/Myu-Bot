@@ -1,23 +1,23 @@
 import { Client, Message, MessageReaction, User, MessageEmbed } from 'discord.js'
 import { Db } from 'mongodb'
 import utilities from '../../utils/utilities';
-let lastGif:number = 0, count:number = 9;
-let lastGifFail:number = 0, countFail:number = 5;
+let lastGif: number = 0, count: number = 9;
+let lastGifFail: number = 0, countFail: number = 5;
 
-module.exports.run = async (bot:Client, msg:Message, args:string[], db:Db) => {
+module.exports.run = async (bot: Client, msg: Message, args: string[], db: Db) => {
 
-    if(msg.mentions.everyone)return;
+    if (msg.mentions.everyone) return;
     let mention = msg.mentions.users.first()
-    if(!mention)return;
+    if (!mention) return;
 
-    if(mention.id == msg.author.id) // Send this reply if user mentioned is the same as user who sent message
-        return msg.channel.send({"embed": { "title": `:x: > **You can't highfive youself!**`, "color": 13632027 }});
+    if (mention.id == msg.author.id) // Send this reply if user mentioned is the same as user who sent message
+        return msg.channel.send({ "embed": { "title": `:x: > **You can't highfive youself!**`, "color": 13632027 } });
 
-    if(mention.id == bot.user.id)return;
+    if (mention.id == bot.user.id) return;
 
     let result = await db.collection('highfive').findOne({ 'author': { $eq: msg.author.id }, 'target': { $eq: mention.id } });
     if (result)
-        return msg.channel.send({"embed": { "title": `:x: > **You already requested this user a highfive!**`, "color": 13632027 }});
+        return msg.channel.send({ "embed": { "title": `:x: > **You already requested this user a highfive!**`, "color": 13632027 } });
 
     let reply = await msg.channel.send({
         "embed": {
@@ -31,7 +31,7 @@ module.exports.run = async (bot:Client, msg:Message, args:string[], db:Db) => {
     })
 
     let n = utilities.randomInt(count)
-    while(lastGif == n)
+    while (lastGif == n)
         n = utilities.randomInt(count);
     lastGif = n;
 
@@ -41,11 +41,11 @@ module.exports.run = async (bot:Client, msg:Message, args:string[], db:Db) => {
     setTimeout(async () => {
         let result = await db.collection('highfive').findOne({ '_id': { $eq: reply.id }, 'target': { $eq: mention.id } });
 
-        if(result) {
+        if (result) {
             await reply.delete()
             await db.collection('highfive').deleteOne({ '_id': { $eq: reply.id }, 'target': { $eq: mention.id } })
             let n = utilities.randomInt(countFail)
-            while(lastGifFail == n)
+            while (lastGifFail == n)
                 n = utilities.randomInt(countFail);
             lastGifFail = n;
 

@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Cooldowns | Q-Bot Docs - v1.5.0</title>
-	<meta name="description" content="Documentation for Q-Bot Docs - v1.5.0">
+	<title>Cooldowns | Q-Bot Docs - v1.6.0</title>
+	<meta name="description" content="Documentation for Q-Bot Docs - v1.6.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
 /* ==========================================================================
@@ -2692,7 +2692,7 @@ img {
 		<div class="container">
 			<div class="table-wrap">
 				<div class="table-cell">
-					<strong><a href="../index.html">Q-Bot Docs - v1.5.0</a></strong>
+					<strong><a href="../index.html">Q-Bot Docs - v1.6.0</a></strong>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -2725,14 +2725,14 @@ img {
 		<li class=" tsd-kind-class tsd-parent-kind-module">
 			<a href="../classes/cooldowns.cooldown.html" class="tsd-kind-icon">cooldown</a>
 		</li>
-		<li class=" tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
-			<a href="../interfaces/cooldowns.stringkeyarray.html" class="tsd-kind-icon">string<wbr>Key<wbr>Array</a>
-		</li>
 		<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 			<a href="cooldowns.html#cooldownmsg" class="tsd-kind-icon">cooldown<wbr>Msg</a>
 		</li>
 		<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 			<a href="cooldowns.html#cooldownxp" class="tsd-kind-icon">cooldownXP</a>
+		</li>
+		<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+			<a href="cooldowns.html#exp" class="tsd-kind-icon">exp</a>
 		</li>
 	</ul>
 </nav>
@@ -2756,16 +2756,11 @@ img {
 						</ul>
 					</section>
 					<section class="tsd-index-section tsd-is-not-exported">
-						<h3>Interfaces</h3>
-						<ul class="tsd-index-list">
-							<li class="tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported"><a href="../interfaces/cooldowns.stringkeyarray.html" class="tsd-kind-icon">string<wbr>Key<wbr>Array</a></li>
-						</ul>
-					</section>
-					<section class="tsd-index-section tsd-is-not-exported">
 						<h3>Variables</h3>
 						<ul class="tsd-index-list">
 							<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="cooldowns.html#cooldownmsg" class="tsd-kind-icon">cooldown<wbr>Msg</a></li>
 							<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="cooldowns.html#cooldownxp" class="tsd-kind-icon">cooldownXP</a></li>
+							<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="cooldowns.html#exp" class="tsd-kind-icon">exp</a></li>
 						</ul>
 					</section>
 				</div>
@@ -2776,20 +2771,30 @@ img {
 			<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 				<a name="cooldownmsg" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagLet">Let</span> cooldown<wbr>Msg</h3>
-				<div class="tsd-signature tsd-kind-icon">cooldown<wbr>Msg<span class="tsd-signature-symbol">:</span> <a href="../interfaces/cooldowns.stringkeyarray.html" class="tsd-signature-type">stringKeyArray</a><span class="tsd-signature-symbol"> = []</span></div>
+				<div class="tsd-signature tsd-kind-icon">cooldown<wbr>Msg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = new Map()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/iwa/Q-Bot/blob/d409307/src/events/messages/cooldown.ts#L12">events/messages/cooldown.ts:12</a></li>
+						<li>Defined in <a href="https://github.com/iwa/Q-Bot/blob/67861a3/src/events/messages/cooldown.ts#L14">events/messages/cooldown.ts:14</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 				<a name="cooldownxp" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagLet">Let</span> cooldownXP</h3>
-				<div class="tsd-signature tsd-kind-icon">cooldownXP<span class="tsd-signature-symbol">:</span> <a href="../interfaces/cooldowns.stringkeyarray.html" class="tsd-signature-type">stringKeyArray</a><span class="tsd-signature-symbol"> = []</span></div>
+				<div class="tsd-signature tsd-kind-icon">cooldownXP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = new Map()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/iwa/Q-Bot/blob/d409307/src/events/messages/cooldown.ts#L12">events/messages/cooldown.ts:12</a></li>
+						<li>Defined in <a href="https://github.com/iwa/Q-Bot/blob/67861a3/src/events/messages/cooldown.ts#L15">events/messages/cooldown.ts:15</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+				<a name="exp" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagLet">Let</span> exp</h3>
+				<div class="tsd-signature tsd-kind-icon">exp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/iwa/Q-Bot/blob/67861a3/src/events/messages/cooldown.ts#L12">events/messages/cooldown.ts:12</a></li>
 					</ul>
 				</aside>
 			</section>

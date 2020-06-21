@@ -2,9 +2,9 @@ import { Client, Message, MessageEmbed } from 'discord.js'
 
 let reply = ["Yes", "No", "Yep", "Nope", "Probably", "Well...", "Probably not", "Reply hazy, try again", "Take a guess", "Nah.", "🎱"] // I like that last one. :)
 
-module.exports.run = async (bot:Client, msg:Message, args:string[]) => {
-    if(await msg.channel.type != "text")return;
-    if(args.length < 1)return;
+module.exports.run = async (bot: Client, msg: Message, args: string[]) => {
+    if (msg.channel.type != "text") return;
+    if (args.length < 1) return;
     let r = Math.floor((Math.random() * reply.length));
     const embed = new MessageEmbed();
     embed.setTitle(`🎱 ${reply[r]}`)

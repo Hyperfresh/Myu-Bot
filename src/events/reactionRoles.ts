@@ -21,21 +21,30 @@ export default class reactionRoles {
      * @param {MessageReaction} reaction
      * @param {User} author
      */
-    static async add (reaction:MessageReaction, author:User) {
-        let mongod = await MongoClient.connect(url, {'useUnifiedTopology': true});
+    static async add(reaction: MessageReaction, author: User) {
+        if (author.bot) return;
+        let mongod = await MongoClient.connect(url, { 'useUnifiedTopology': true });
         let db = mongod.db(dbName);
 
         let msg = await db.collection('msg').findOne({ _id: reaction.message.id })
-        if(!msg)return mongod.close();
+        if (!msg) return mongod.close();
 
-        let role = msg.roles.find((val:any) => val.emote == reaction.emoji.name)
-        if(!role)return mongod.close();
+        let role = msg.roles.find((val: any) => val.emote == reaction.emoji.name)
+        if (!role) return mongod.close();
 
         let member = reaction.message.guild.member(author)
-        if(!member)return mongod.close();
+        if (!member) return mongod.close();
         await member.roles.add(role.id)
 
-        return mongod.close();
+        await mongod.close();
+
+        let guildRole = await member.guild.roles.fetch(role.id);
+
+        try {
+            await member.send(`You put on the \`${guildRole.name}\` role!`)
+        } catch (error) {
+            return;
+        }
     }
 
     /**
@@ -43,20 +52,29 @@ export default class reactionRoles {
      * @param {MessageReaction} reaction
      * @param {User} author
      */
-    static async remove (reaction:MessageReaction, author:User) {
-        let mongod = await MongoClient.connect(url, {'useUnifiedTopology': true});
+    static async remove(reaction: MessageReaction, author: User) {
+        if (author.bot) return;
+        let mongod = await MongoClient.connect(url, { 'useUnifiedTopology': true });
         let db = mongod.db(dbName);
 
         let msg = await db.collection('msg').findOne({ _id: reaction.message.id })
-        if(!msg)return mongod.close();
+        if (!msg) return mongod.close();
 
-        let role = msg.roles.find((val:any) => val.emote == reaction.emoji.name)
-        if(!role)return mongod.close();
+        let role = msg.roles.find((val: any) => val.emote == reaction.emoji.name)
+        if (!role) return mongod.close();
 
         let member = reaction.message.guild.member(author)
-        if(!member)return mongod.close();
+        if (!member) return mongod.close();
         await member.roles.remove(role.id)
 
-        return mongod.close();
+        await mongod.close();
+
+        let guildRole = await member.guild.roles.fetch(role.id);
+
+        try {
+            await member.send(`You took off the \`${guildRole.name}\` role!`)
+        } catch (error) {
+            return;
+        }
     }
 }
