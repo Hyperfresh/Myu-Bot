@@ -1,3 +1,13 @@
+# Q-Bot is no longer in development
+
+The bot has been succeeded by [Kwako](http://kwako.iwa.sh).
+As a result, this repository has been archived.
+The original README as continues as below.
+
+*By the way, **this is a fork, not the official Q-Bot repository.***
+
+---
+
 <div align="center">
 <p align="center">
   <img src="https://cdn.iwa.sh/img/tiles/q-bot.png" alt="logo"/>
